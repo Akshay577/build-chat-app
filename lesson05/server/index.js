@@ -27,7 +27,7 @@ const UsersState = {
 
 const io = new Server(expressServer, {
     cors: {
-        origin: process.env.NODE_ENV === "production" ? false : ["http://localhost:5500", "http://127.0.0.1:5500"]
+        origin: process.env.NODE_ENV === "production" ? false : ["http://localhost:5500", "http://127.0.0.1:5501"]
     }
 })
 
@@ -99,6 +99,7 @@ io.on('connection', socket => {
     // Listening for a message event 
     socket.on('message', ({ name, text }) => {
         const room = getUser(socket.id)?.room
+        console.log('name , text ------->>>', name,' : ', text)
         if (room) {
             io.to(room).emit('message', buildMsg(name, text))
         }
